@@ -201,12 +201,12 @@ RSpec.describe Philiprehberger::RandomData do
   end
 
   describe 'data lists' do
-    it 'has 50 first names' do
-      expect(described_class::FIRST_NAMES.length).to eq(50)
+    it 'has at least 30 first names' do
+      expect(described_class::FIRST_NAMES.length).to be >= 30
     end
 
-    it 'has 50 last names' do
-      expect(described_class::LAST_NAMES.length).to eq(50)
+    it 'has at least 30 last names' do
+      expect(described_class::LAST_NAMES.length).to be >= 30
     end
 
     it 'has lorem ipsum words' do

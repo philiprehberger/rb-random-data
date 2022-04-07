@@ -200,6 +200,76 @@ RSpec.describe Philiprehberger::RandomData do
     end
   end
 
+  describe '.address' do
+    it 'returns a hash with street, city, state, zip' do
+      result = described_class.address
+      expect(result).to be_a(Hash)
+      expect(result).to have_key(:street)
+      expect(result).to have_key(:city)
+      expect(result).to have_key(:state)
+      expect(result).to have_key(:zip)
+    end
+
+    it 'returns a 5-digit zip code' do
+      result = described_class.address
+      expect(result[:zip]).to match(/\A\d{5}\z/)
+    end
+  end
+
+  describe '.company' do
+    it 'returns a string' do
+      expect(described_class.company).to be_a(String)
+    end
+
+    it 'contains a known suffix' do
+      result = described_class.company
+      suffix = result.split.last
+      expect(described_class::COMPANY_SUFFIXES).to include(suffix)
+    end
+  end
+
+  describe '.url' do
+    it 'returns a valid URL format' do
+      result = described_class.url
+      expect(result).to match(%r{\Ahttps?://[a-z]+\d+\.[a-z]+\z})
+    end
+  end
+
+  describe '.color' do
+    it 'returns a hex color string' do
+      result = described_class.color
+      expect(result).to match(/\A#[0-9a-f]{6}\z/)
+    end
+  end
+
+  describe '.password' do
+    it 'returns a string of default length 16' do
+      expect(described_class.password.length).to eq(16)
+    end
+
+    it 'respects custom length' do
+      expect(described_class.password(length: 8).length).to eq(8)
+    end
+
+    it 'excludes symbols when symbols: false' do
+      result = described_class.password(length: 100, symbols: false)
+      expect(result).to match(/\A[a-zA-Z0-9]+\z/)
+    end
+  end
+
+  describe '.timestamp' do
+    it 'returns a Time object' do
+      expect(described_class.timestamp).to be_a(Time)
+    end
+
+    it 'respects custom range' do
+      start_time = Time.new(2025, 1, 1)
+      end_time = Time.new(2025, 12, 31)
+      result = described_class.timestamp(start_time..end_time)
+      expect(result).to be_between(start_time, end_time)
+    end
+  end
+
   describe 'data lists' do
     it 'has at least 30 first names' do
       expect(described_class::FIRST_NAMES.length).to be >= 30

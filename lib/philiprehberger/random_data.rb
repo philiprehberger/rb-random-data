@@ -150,5 +150,66 @@ module Philiprehberger
     def self.ipv4
       Array.new(4) { rand(1..254) }.join('.')
     end
+
+    # Generate a random address
+    #
+    # @return [Hash] address with street, city, state, zip
+    def self.address
+      number = rand(100..9999)
+      street = "#{LAST_NAMES.sample} #{STREET_SUFFIXES.sample}"
+      city = CITIES.sample
+      state = STATES.sample
+      zip = format('%05d', rand(10_000..99_999))
+      { street: "#{number} #{street}", city: city, state: state, zip: zip }
+    end
+
+    # Generate a random company name
+    #
+    # @return [String] company name
+    def self.company
+      "#{LAST_NAMES.sample} #{COMPANY_SUFFIXES.sample}"
+    end
+
+    # Generate a random URL
+    #
+    # @return [String] URL
+    def self.url
+      scheme = URL_SCHEMES.sample
+      domain = "#{LAST_NAMES.sample.downcase}#{rand(1..999)}"
+      tld = URL_TLDS.sample
+      "#{scheme}://#{domain}.#{tld}"
+    end
+
+    # Generate a random hex color
+    #
+    # @return [String] hex color string
+    def self.color
+      format('#%06x', rand(0x000000..0xFFFFFF))
+    end
+
+    # Generate a random password
+    #
+    # @param length [Integer] password length
+    # @param symbols [Boolean] include symbols
+    # @return [String] random password
+    def self.password(length: 16, symbols: true)
+      chars = [('a'..'z'), ('A'..'Z'), ('0'..'9')].flat_map(&:to_a)
+      chars += %w[! @ # $ % ^ & * _ - + =] if symbols
+      Array.new(length) { chars.sample }.join
+    end
+
+    # Generate a random timestamp
+    #
+    # @param range [Range<Time>] optional time range
+    # @return [Time] random time
+    def self.timestamp(range = nil)
+      if range
+        start_time = range.min
+        end_time = range.max
+        Time.at(start_time.to_f + (rand * (end_time.to_f - start_time.to_f)))
+      else
+        Time.now - rand(0..(365 * 24 * 60 * 60))
+      end
+    end
   end
 end

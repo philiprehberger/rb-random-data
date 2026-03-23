@@ -4,7 +4,7 @@
 [![Gem Version](https://badge.fury.io/rb/philiprehberger-random_data.svg)](https://rubygems.org/gems/philiprehberger-random_data)
 [![License](https://img.shields.io/github/license/philiprehberger/rb-random-data)](LICENSE)
 
-Lightweight random test data generator for names, emails, and common types. Includes 50 first names, 50 last names, and lorem ipsum words for realistic test fixtures.
+Lightweight random test data generator for names, emails, and common types
 
 ## Requirements
 

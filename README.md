@@ -15,7 +15,7 @@ Lightweight random test data generator for names, emails, and common types
 Add to your Gemfile:
 
 ```ruby
-gem 'philiprehberger-random_data'
+gem "philiprehberger-random_data"
 ```
 
 Or install directly:
@@ -94,8 +94,8 @@ Philiprehberger::RandomData.ipv4  # => "192.45.67.123"
 
 ```bash
 bundle install
-bundle exec rspec      # Run tests
-bundle exec rubocop    # Check code style
+bundle exec rspec
+bundle exec rubocop
 ```
 
 ## License

@@ -27,7 +27,7 @@ gem install philiprehberger-random_data
 ## Usage
 
 ```ruby
-require 'philiprehberger/random_data'
+require "philiprehberger/random_data"
 
 Philiprehberger::RandomData.name        # => "Jessica Martinez"
 Philiprehberger::RandomData.first_name  # => "Robert"

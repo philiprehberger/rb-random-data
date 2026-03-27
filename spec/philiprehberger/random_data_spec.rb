@@ -11,12 +11,12 @@ RSpec.describe Philiprehberger::RandomData do
     it 'returns a string with first and last name' do
       result = described_class.name
       expect(result).to be_a(String)
-      expect(result.split(' ').length).to eq(2)
+      expect(result.split.length).to eq(2)
     end
 
     it 'uses names from the data lists' do
       result = described_class.name
-      parts = result.split(' ')
+      parts = result.split
       expect(described_class::FIRST_NAMES).to include(parts[0])
       expect(described_class::LAST_NAMES).to include(parts[1])
     end
@@ -82,7 +82,7 @@ RSpec.describe Philiprehberger::RandomData do
 
     it 'respects word count' do
       result = described_class.sentence(words: 5)
-      words = result.chomp('.').split(' ')
+      words = result.chomp('.').split
       expect(words.length).to eq(5)
     end
   end
@@ -90,7 +90,7 @@ RSpec.describe Philiprehberger::RandomData do
   describe '.paragraph' do
     it 'returns a string with multiple sentences' do
       result = described_class.paragraph(sentences: 3)
-      sentence_count = result.scan(/\./).length
+      sentence_count = result.scan('.').length
       expect(sentence_count).to eq(3)
     end
   end

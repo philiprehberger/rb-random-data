@@ -89,7 +89,7 @@ module Philiprehberger
     def self.float(range = 0.0..1.0)
       min = range.min.to_f
       max = range.max.to_f
-      min + rand * (max - min)
+      min + (rand * (max - min))
     end
 
     # Generate a random date within a range
@@ -120,7 +120,7 @@ module Philiprehberger
     # @param length [Integer] number of hex characters
     # @return [String] hex string
     def self.hex(length = 16)
-      SecureRandom.hex(length / 2 + 1)[0, length]
+      SecureRandom.hex((length / 2) + 1)[0, length]
     end
 
     # Pick a random element from an array

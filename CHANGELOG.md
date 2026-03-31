@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-03-31
+
+### Added
+- `RandomData.address` generating street, city, state, and zip
+- `RandomData.company` generating random company names
+- `RandomData.url` generating random URLs
+- `RandomData.color` generating hex color strings
+- `RandomData.password(length:, symbols:)` generating random passwords
+- `RandomData.timestamp(range)` generating random Time objects
+- GitHub issue templates, PR template, and Dependabot configuration
+
+### Changed
+- README restructured with all 8 standard badges and Support section
+
+### Fixed
+- Gemspec author and email fields corrected
+- Ruby version requirement normalized to `>= 3.1.0`
+
 ## [0.1.4] - 2026-03-24
 
 ### Fixed

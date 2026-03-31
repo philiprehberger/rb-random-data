@@ -36,5 +36,24 @@ module Philiprehberger
       '###-###-####',
       '+1 ### ### ####'
     ].freeze
+
+    STREET_SUFFIXES = %w[St Ave Blvd Dr Ln Rd Way Ct Pl Cir].freeze
+
+    CITIES = %w[
+      Springfield Riverside Fairview Madison Clinton Franklin Greenville Bristol
+      Oakland Burlington Salem Georgetown Manchester Arlington Jackson Lexington
+    ].freeze
+
+    STATES = %w[
+      AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD
+      MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC
+      SD TN TX UT VT VA WA WV WI WY
+    ].freeze
+
+    COMPANY_SUFFIXES = %w[Inc LLC Corp Group Solutions Systems Labs Technologies].freeze
+
+    URL_SCHEMES = %w[https http].freeze
+
+    URL_TLDS = %w[com org net io dev app co].freeze
   end
 end

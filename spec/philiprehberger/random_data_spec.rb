@@ -187,6 +187,54 @@ RSpec.describe Philiprehberger::RandomData do
     end
   end
 
+  describe '.weighted_pick' do
+    it 'returns an element from the array' do
+      arr = %i[a b c]
+      expect(arr).to include(described_class.weighted_pick(arr, weights: [1, 1, 1]))
+    end
+
+    it 'always returns the only non-zero-weighted element' do
+      arr = %i[a b c]
+      100.times do
+        expect(described_class.weighted_pick(arr, weights: [0, 1, 0])).to eq(:b)
+      end
+    end
+
+    it 'biases selection toward the heavier weight' do
+      arr = %i[rare common]
+      counts = { rare: 0, common: 0 }
+      2000.times do
+        counts[described_class.weighted_pick(arr, weights: [1, 99])] += 1
+      end
+      expect(counts[:common]).to be > counts[:rare] * 5
+    end
+
+    it 'supports float weights' do
+      arr = [:only]
+      expect(described_class.weighted_pick(arr, weights: [0.25])).to eq(:only)
+    end
+
+    it 'raises ArgumentError when array and weights differ in length' do
+      expect { described_class.weighted_pick([1, 2], weights: [1]) }
+        .to raise_error(ArgumentError, /length/)
+    end
+
+    it 'raises ArgumentError when any weight is negative' do
+      expect { described_class.weighted_pick([1, 2], weights: [1, -1]) }
+        .to raise_error(ArgumentError, /non-negative/)
+    end
+
+    it 'raises ArgumentError when all weights are zero' do
+      expect { described_class.weighted_pick([1, 2], weights: [0, 0]) }
+        .to raise_error(ArgumentError, /zero/)
+    end
+
+    it 'raises ArgumentError when a weight is not numeric' do
+      expect { described_class.weighted_pick([1, 2], weights: [1, 'x']) }
+        .to raise_error(ArgumentError, /numeric/)
+    end
+  end
+
   describe '.ipv4' do
     it 'returns a valid IPv4 format' do
       result = described_class.ipv4

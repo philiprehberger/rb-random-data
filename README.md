@@ -63,6 +63,14 @@ Philiprehberger::RandomData.pick(colors)       # => "green"
 Philiprehberger::RandomData.sample(colors, 2)  # => ["blue", "red"]
 ```
 
+### Weighted Pick
+
+```ruby
+tiers = %w[bronze silver gold]
+Philiprehberger::RandomData.weighted_pick(tiers, weights: [70, 25, 5])
+# => "bronze" most of the time, "gold" rarely
+```
+
 ### Network
 
 ```ruby
@@ -107,6 +115,7 @@ Philiprehberger::RandomData.timestamp  # => 2025-08-14 03:22:11 +0000
 | `RandomData.hex(length)` | Random hex string |
 | `RandomData.pick(array)` | Random element from array |
 | `RandomData.sample(array, n)` | Random n elements from array |
+| `RandomData.weighted_pick(array, weights:)` | Random element chosen proportionally to matching weights |
 | `RandomData.ipv4` | Random IPv4 address |
 | `RandomData.address` | Random address hash with street, city, state, zip |
 | `RandomData.company` | Random company name |

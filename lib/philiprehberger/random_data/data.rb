@@ -55,5 +55,34 @@ module Philiprehberger
     URL_SCHEMES = %w[https http].freeze
 
     URL_TLDS = %w[com org net io dev app co].freeze
+
+    # Pick a random element from +array+ using the matching probability +weights+.
+    #
+    # Each index in +array+ has a corresponding non-negative numeric weight in +weights+.
+    # The element is selected via cumulative-weight sampling, where elements with higher
+    # weights are proportionally more likely to be returned.
+    #
+    # @param array [Array] source array
+    # @param weights [Array<Numeric>] non-negative weights, one per element
+    # @return [Object] one element from +array+ chosen proportionally to its weight
+    # @raise [ArgumentError] if +array+ and +weights+ differ in length,
+    #   if any weight is negative, or if every weight is zero
+    def self.weighted_pick(array, weights:)
+      raise ArgumentError, 'array and weights must be the same length' if array.length != weights.length
+      raise ArgumentError, 'weights must all be numeric' unless weights.all?(Numeric)
+      raise ArgumentError, 'weights must all be non-negative' if weights.any?(&:negative?)
+
+      total = weights.sum
+      raise ArgumentError, 'weights must not all be zero' if total.zero?
+
+      threshold = rand * total
+      cumulative = 0.0
+      array.each_with_index do |element, index|
+        cumulative += weights[index]
+        return element if threshold < cumulative
+      end
+
+      array.last
+    end
   end
 end

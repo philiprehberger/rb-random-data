@@ -248,6 +248,27 @@ RSpec.describe Philiprehberger::RandomData do
     end
   end
 
+  describe '.coordinates' do
+    it 'returns a hash with latitude and longitude Floats' do
+      result = described_class.coordinates
+      expect(result).to be_a(Hash)
+      expect(result[:latitude]).to be_a(Float)
+      expect(result[:longitude]).to be_a(Float)
+    end
+
+    it 'keeps latitude within -90.0..90.0' do
+      100.times do
+        expect(described_class.coordinates[:latitude]).to be_between(-90.0, 90.0)
+      end
+    end
+
+    it 'keeps longitude within -180.0..180.0' do
+      100.times do
+        expect(described_class.coordinates[:longitude]).to be_between(-180.0, 180.0)
+      end
+    end
+  end
+
   describe '.address' do
     it 'returns a hash with street, city, state, zip' do
       result = described_class.address

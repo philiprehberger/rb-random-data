@@ -78,6 +78,13 @@ Philiprehberger::RandomData.ipv4  # => "192.45.67.123"
 Philiprehberger::RandomData.url   # => "https://smith42.com"
 ```
 
+### Coordinates
+
+```ruby
+Philiprehberger::RandomData.coordinates
+# => { latitude: 42.7651, longitude: -87.3419 }
+```
+
 ### Address and Company
 
 ```ruby
@@ -117,6 +124,7 @@ Philiprehberger::RandomData.timestamp  # => 2025-08-14 03:22:11 +0000
 | `RandomData.sample(array, n)` | Random n elements from array |
 | `RandomData.weighted_pick(array, weights:)` | Random element chosen proportionally to matching weights |
 | `RandomData.ipv4` | Random IPv4 address |
+| `RandomData.coordinates` | Random `{ latitude:, longitude: }` pair |
 | `RandomData.address` | Random address hash with street, city, state, zip |
 | `RandomData.company` | Random company name |
 | `RandomData.url` | Random URL |

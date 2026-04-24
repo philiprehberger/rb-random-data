@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-04-24
+
+### Added
+- `RandomData.coordinates` — returns a `{ latitude:, longitude: }` hash with latitude in `-90.0..90.0` and longitude in `-180.0..180.0`
+
 ## [0.3.0] - 2026-04-16
 
 ### Added

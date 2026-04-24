@@ -151,6 +151,18 @@ module Philiprehberger
       Array.new(4) { rand(1..254) }.join('.')
     end
 
+    # Generate a random geographic coordinate pair.
+    #
+    # Latitude is drawn uniformly from `-90.0..90.0` and longitude from
+    # `-180.0..180.0`. The distribution is not area-weighted — it samples
+    # the latitude axis uniformly, not over a sphere — which is usually
+    # what test fixtures want.
+    #
+    # @return [Hash{Symbol => Float}] `{ latitude:, longitude: }`
+    def self.coordinates
+      { latitude: float(-90.0..90.0), longitude: float(-180.0..180.0) }
+    end
+
     # Generate a random address
     #
     # @return [Hash] address with street, city, state, zip

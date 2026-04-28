@@ -223,5 +223,40 @@ module Philiprehberger
         Time.now - rand(0..(365 * 24 * 60 * 60))
       end
     end
+
+    # Generate an array of `size` items by repeatedly calling the named generator.
+    # Extra options are forwarded to the generator on every call.
+    #
+    # @example
+    #   RandomData.array(of: :email, size: 3)
+    #   RandomData.array(of: :integer, size: 5, range: 1..10)
+    #
+    # @param of [Symbol] generator method name (must be a public method on this module other than `array`)
+    # @param size [Integer] number of items to generate (must be >= 0)
+    # @param opts [Hash] keyword arguments forwarded to the generator
+    # @return [Array] generated items
+    # @raise [Error] if `of` is not a known generator or `size` is negative
+    def self.array(of:, size:, **opts)
+      raise Error, 'size must be a non-negative Integer' unless size.is_a?(Integer) && size >= 0
+      raise Error, "unknown generator: #{of}" unless of != :array && respond_to?(of)
+
+      Array.new(size) do
+        opts.empty? ? public_send(of) : public_send(of, **opts)
+      end
+    end
+
+    # Seed Ruby's PRNG so subsequent generators produce a deterministic sequence.
+    # Useful for reproducible test runs and golden-file fixtures. Note that methods
+    # using `SecureRandom` (`uuid`, `hex`) are not affected — they read from the
+    # OS CSPRNG.
+    #
+    # @param value [Integer] seed value
+    # @return [Integer] the previous seed
+    # @raise [Error] if `value` is not an Integer
+    def self.seed!(value)
+      raise Error, 'seed must be an Integer' unless value.is_a?(Integer)
+
+      Kernel.srand(value)
+    end
   end
 end

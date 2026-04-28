@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.0] - 2026-04-27
+
+### Added
+- `RandomData.array(of:, size:, **opts)` — generate `size` items by repeatedly calling the named generator; forwards keyword options on every call. Raises `Error` for unknown generator names or negative size.
+- `RandomData.seed!(value)` — seeds Ruby's PRNG for deterministic output across subsequent generators (useful for reproducible test runs and golden-file fixtures). `uuid` and `hex` use `SecureRandom` and are not affected.
+
 ## [0.4.0] - 2026-04-24
 
 ### Added

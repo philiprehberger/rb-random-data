@@ -352,4 +352,73 @@ RSpec.describe Philiprehberger::RandomData do
       expect(described_class::LOREM_WORDS.length).to be > 0
     end
   end
+
+  describe '.array' do
+    it 'returns an empty array when size is 0' do
+      expect(described_class.array(of: :email, size: 0)).to eq([])
+    end
+
+    it 'generates the requested number of items' do
+      result = described_class.array(of: :email, size: 5)
+      expect(result.length).to eq(5)
+      result.each { |email| expect(email).to be_a(String) }
+    end
+
+    it 'forwards keyword arguments to the generator' do
+      result = described_class.array(of: :password, size: 4, length: 8, symbols: false)
+      expect(result.length).to eq(4)
+      result.each do |pw|
+        expect(pw.length).to eq(8)
+        expect(pw).to match(/\A[a-zA-Z0-9]+\z/)
+      end
+    end
+
+    it 'works for generators returning hashes' do
+      result = described_class.array(of: :address, size: 3)
+      expect(result.length).to eq(3)
+      result.each { |addr| expect(addr).to include(:street, :city, :state, :zip) }
+    end
+
+    it 'raises Error for an unknown generator name' do
+      expect { described_class.array(of: :nope, size: 1) }
+        .to raise_error(Philiprehberger::RandomData::Error, /unknown generator/)
+    end
+
+    it 'raises Error when called with itself as the generator' do
+      expect { described_class.array(of: :array, size: 1) }
+        .to raise_error(Philiprehberger::RandomData::Error, /unknown generator/)
+    end
+
+    it 'raises Error for negative size' do
+      expect { described_class.array(of: :email, size: -1) }
+        .to raise_error(Philiprehberger::RandomData::Error, /non-negative/)
+    end
+
+    it 'raises Error for non-integer size' do
+      expect { described_class.array(of: :email, size: 'two') }
+        .to raise_error(Philiprehberger::RandomData::Error, /Integer/)
+    end
+  end
+
+  describe '.seed!' do
+    it 'produces a deterministic sequence across two seeds' do
+      described_class.seed!(42)
+      first_run = Array.new(5) { described_class.integer(1..1_000_000) }
+
+      described_class.seed!(42)
+      second_run = Array.new(5) { described_class.integer(1..1_000_000) }
+
+      expect(first_run).to eq(second_run)
+    end
+
+    it 'returns the previous seed' do
+      described_class.seed!(1)
+      expect(described_class.seed!(2)).to be_a(Integer)
+    end
+
+    it 'raises Error for non-integer seed' do
+      expect { described_class.seed!('abc') }
+        .to raise_error(Philiprehberger::RandomData::Error, /Integer/)
+    end
+  end
 end

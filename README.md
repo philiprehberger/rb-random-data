@@ -103,6 +103,33 @@ Philiprehberger::RandomData.password(length: 8, symbols: false)  # => "kQ7mR2nP"
 Philiprehberger::RandomData.timestamp  # => 2025-08-14 03:22:11 +0000
 ```
 
+### Bulk Generation
+
+`array` calls a generator `size` times and forwards options on every call.
+
+```ruby
+Philiprehberger::RandomData.array(of: :email, size: 3)
+# => ["alice.smith@example.com", "bob_jones@test.com", "carol.lee@demo.com"]
+
+Philiprehberger::RandomData.array(of: :integer, size: 5, range: 1..10)
+# => [3, 8, 1, 6, 9]
+
+Philiprehberger::RandomData.array(of: :address, size: 2)
+# => [{ street: ..., city: ..., state: ..., zip: ... }, ...]
+```
+
+### Deterministic Output
+
+Seed Ruby's PRNG so subsequent calls produce a deterministic sequence. Useful
+for reproducible test runs and golden-file fixtures. `uuid` and `hex` use
+`SecureRandom` and are not affected.
+
+```ruby
+Philiprehberger::RandomData.seed!(42)
+Philiprehberger::RandomData.integer(1..100)  # => deterministic value
+Philiprehberger::RandomData.integer(1..100)  # => deterministic next value
+```
+
 ## API
 
 | Method | Description |
@@ -131,6 +158,8 @@ Philiprehberger::RandomData.timestamp  # => 2025-08-14 03:22:11 +0000
 | `RandomData.color` | Random hex color string |
 | `RandomData.password(length:, symbols:)` | Random password |
 | `RandomData.timestamp(range)` | Random Time object |
+| `RandomData.array(of:, size:, **opts)` | Generate `size` items by repeatedly calling the named generator; forwards `opts` |
+| `RandomData.seed!(value)` | Seed Ruby's PRNG so subsequent generators are deterministic; returns the previous seed |
 
 ## Development
 
